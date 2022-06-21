@@ -1,0 +1,33 @@
+config:
+    name: testcase description
+    variables: {}
+teststeps:
+-   name: /xp-lark-trade-boot/v1/api/trade/pre/create
+    request:
+        headers:
+            Content-Type: application/json
+            Postman-Token: ffa76324-0ec0-4168-9476-cd10dec46dcd
+            User-Agent: PostmanRuntime/7.29.0
+        json:
+            goodsContent:
+            -   consumeAmount: 1
+                skuId: '1482903849148588033'
+                spuId: '1482903848053874690'
+            preTradeOrderType: 0
+        method: POST
+        params:
+            redirectURL: http://www.baidu.com
+        url: http://logan-gateway.test.logan.xiaopeng.local/xp-lark-trade-boot/v1/api/trade/pre/create
+    validate:
+    -   eq:
+        - status_code
+        - 200
+    -   eq:
+        - headers.Content-Type
+        - application/json;charset=UTF-8
+    -   eq:
+        - content.code
+        - 200
+    -   eq:
+        - content.msg
+        - success
