@@ -15,10 +15,8 @@ class TestCase(HttpRunner):
 
     teststeps = [
         Step(
-            RunRequest("查询订单详情")
-             # Hook机制，查询订单状态，设置接口请求前的等待时间
-            .setup_hook("${sql_insert_send($tid,$orderId)}")
-            .get("/xp-lark-trade-boot/v1/api/order/info/$orderId")
+            RunRequest("催发货")
+            .post("/xp-lark-trade-boot/v1/api/trade/urgeDelivery")
             .with_headers(
                 **{
                     "Cookie": "${get_cookies()}"
@@ -26,15 +24,34 @@ class TestCase(HttpRunner):
             )
             .with_params(
                 **{
+                    "tid":"T20220602095821877214579",
+                    "orderId":"1532179788651872257",
                     "redirectURL": "https:%2F%2Fpmall.cs-pre.xiaopeng.com%2Forder%2Fdetail%2F1525022461846548481"
                 }
             )
-            .teardown_hook("${sleep(40)}")
             .validate()
             .assert_equal("body.code", 200, "断言失败")
             .assert_equal("body.msg", "success", "断言失败")
-            # 订单状态变为：“已发货”
-            .assert_equal("body.data.orders[0].orderStatus", 15, "断言失败：交易失败")
+        ),
+
+        Step(
+            RunRequest("催发货")
+            .post("/xp-lark-trade-boot/v1/api/trade/urgeDelivery")
+            .with_headers(
+                **{
+                    "Cookie": "${get_cookies()}"
+                }
+            )
+            .with_params(
+                **{
+                    "tid": "T20220602095821877214579",
+                    "orderId": "1532179788651872257",
+                    "redirectURL": "https:%2F%2Fpmall.cs-pre.xiaopeng.com%2Forder%2Fdetail%2F1525022461846548481"
+                }
+            )
+            .validate()
+            .assert_equal("body.code", 200, "断言失败")
+            .assert_equal("body.msg", "success", "断言失败")
         )
     ]
 

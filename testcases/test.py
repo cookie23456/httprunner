@@ -1,5 +1,7 @@
 import json
 import  debugtalk
+
+print("测试一下git")
 """
 tid = 'T20220424102640539793298'
 content = {

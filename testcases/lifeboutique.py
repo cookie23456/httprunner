@@ -332,8 +332,6 @@ class TestCase(HttpRunner):
                     "giveBackGoodsType": "2"
                 }
             )
-
-
         )
 
     ]

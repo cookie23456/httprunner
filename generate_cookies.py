@@ -159,9 +159,9 @@ class GenerateCookies(object):
 if __name__ == '__main__':
     gen = GenerateCookies()
     cookies = gen.generate_cookies()
-    adm_cookies = gen.adm_generate_cookies()
     gen.write_in(cookies)
     print('C端cookies已更新')
+    adm_cookies = gen.adm_generate_cookies()
     gen.adm_write_in(adm_cookies)
     print('B端cookies已更新')
 
